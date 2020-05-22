@@ -35,18 +35,18 @@ signal processing block is added in libs whose CMakeLists.txt is updated accordi
 
 The uhd_signal_source.cc is complemented with an additional flag switched in the configuration
 file
-``
+```Cpp
  jmf_  = configuration->property(role + ".jmf", 0);
-``
+```
 which, in this implementation, overrides the RF_channels_ variable in the source block, allowing
 for a many-to-one stream architecture.
 
 Upon selecting the custom block processing, the object is created
-```
+```Cpp
  jmf_block_=gnss_sdr_make_jmf(item_size_, queue_);
 ```
 and connected to the UHD source
-```
+```Cpp
  for (int i = 0; i < RF_channels_; i++)
      {
        if (jmf_ != 0)
@@ -59,7 +59,7 @@ and connected to the UHD source
 Finally, since the signal conditionner will be looking for the right-most
 source processing block, the custom block is declared as the last signal source
 block:
-```
+```cpp
 gr::basic_block_sptr UhdSignalSource::get_right_block(int RF_channel)
 {
     if ( jmf_ != 0ULL)
@@ -76,7 +76,7 @@ The implementation of the custom block signal processing follows the classical
 architecture of a GNU Radio block, where a constructor initializes variable and the
 work function is provided with the I/Q stream to be processed.
 
-```
+```cpp
 int Gnss_JMF::work(int noutput_items,
     gr_vector_const_void_star &input_items,
     gr_vector_void_star &output_items)
