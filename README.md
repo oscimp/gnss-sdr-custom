@@ -42,11 +42,11 @@ which, in this implementation, overrides the RF_channels_ variable in the source
 for a many-to-one stream architecture.
 
 Upon selecting the custom block processing, the object is created
-``
+```
  jmf_block_=gnss_sdr_make_jmf(item_size_, queue_);
-``
+```
 and connected to the UHD source
-``
+```
  for (int i = 0; i < RF_channels_; i++)
      {
        if (jmf_ != 0)
@@ -55,11 +55,11 @@ and connected to the UHD source
              printf("UHD -> JMF connect: %d\n",i);fflush(stdout);
           }
      }
-``
+```
 Finally, since the signal conditionner will be looking for the right-most
 source processing block, the custom block is declared as the last signal source
 block:
-``
+```
 gr::basic_block_sptr UhdSignalSource::get_right_block(int RF_channel)
 {
     if ( jmf_ != 0ULL)
@@ -68,7 +68,7 @@ gr::basic_block_sptr UhdSignalSource::get_right_block(int RF_channel)
         }
     return uhd_source_;
 }
-``
+```
 which will return the UHD source if the custom block is not selected. The custom
 block is now inserted between the UHD source and the signal conditionner.
 
@@ -76,7 +76,7 @@ The implementation of the custom block signal processing follows the classical
 architecture of a GNU Radio block, where a constructor initializes variable and the
 work function is provided with the I/Q stream to be processed.
 
-``
+```
 int Gnss_JMF::work(int noutput_items,
     gr_vector_const_void_star &input_items,
     gr_vector_void_star &output_items)
@@ -98,4 +98,4 @@ int Gnss_JMF::work(int noutput_items,
     volk_free(carre);
     return noutput_items;
 }
-``
+```
