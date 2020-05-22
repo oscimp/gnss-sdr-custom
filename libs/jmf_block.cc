@@ -54,8 +54,8 @@ int Gnss_JMF::work(int noutput_items,
         { // identity: output the same as 1st channel input
           in= (const gr_complex*)input_items[ch]; // all channels
           volk_32fc_x2_multiply_32fc(carre, in, in, CHUNK_SIZE);
-          memcpy(output_items[0], carre, noutput_items * input_signature()->sizeof_stream_item(ch));
         }
     volk_free(carre);
+    memcpy(output_items[0], input_items[0], noutput_items * input_signature()->sizeof_stream_item(0));
     return noutput_items;
 }
